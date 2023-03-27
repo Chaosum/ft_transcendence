@@ -1,0 +1,89 @@
+version: "3"
+services:
+  db:
+    image: postgres:15
+    restart: always
+    volumes:
+      - "./docker/data/db:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    networks:
+      - db
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 5050:8080
+    networks:
+      - db
+
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+      args:
+        NGINX_SERVER_NAME_BACK: ${NGINX_SERVER_NAME_BACK}
+        NGINX_SERVER_NAME_FRONT: ${NGINX_SERVER_NAME_FRONT}
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - nginx
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: ${API_URL}
+        REACT_APP_SOCKET_URL: ${SOCKET_URL}
+        REACT_APP_COOKIE_DOMAIN: ${COOKIE_DOMAIN}
+    restart: always
+    ports:
+      - "3014:3000"
+    networks:
+      - nginx
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3013:3000"
+    volumes:
+      - ./backend/uploads:/transcendence/uploads
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      API42_CLIENT_ID: ${API42_CLIENT_ID}
+      API42_CLIENT_SECRET: ${API42_CLIENT_SECRET}
+      API42_REDIRECT_URI: ${API42_REDIRECT_URI}
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_SECRET: ${COOKIE_SECRET}
+      TOTP_SECRET: ${TOTP_SECRET}
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN}
+      FRONTEND_URL: ${FRONTEND_URL}
+      API_URL: ${API_URL}
+      CORS_ORIGIN: ${CORS_ORIGIN}
+    networks:
+      - nginx
+      - db
+
+networks:
+  nginx:
+    driver: bridge
+  db:
+    driver: bridge

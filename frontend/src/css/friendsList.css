@@ -1,0 +1,165 @@
+.friendsList-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    font-family: 'VT323', monospace;
+    font-size: 20px;
+}
+
+.friendsList-wrapper div {
+    border-radius: 15px;
+    border: none;
+    padding: 10px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.friend-list-item-username {
+    color: white;
+}
+
+.add-accept-friend {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 40px;
+}
+
+.en-attente-button{
+    background-color: #6477B9;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    font-family: 'VT323', monospace;
+    padding: 5px 20px;
+    margin-bottom: 10px;
+    height: 30px;
+}
+
+.en-attente-button:hover {
+    background-color: #4C60A9;
+    cursor: pointer;
+}
+
+.friend-request-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height:400px ;
+    background-color: rgb(52, 63, 62);
+    border-radius: 20px;
+    box-Shadow: 24;
+    padding: 10px;
+}
+
+/* add friend form */
+
+.add-friend-form {
+    font-family: 'VT323', monospace;
+    font-size: 20px;
+    width: 100%;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    color: black;
+}
+
+.add-friend-form-input {
+    background-color: #7289da;
+    border: none;
+    border-radius: 5px;
+    font-family: 'VT323', monospace;
+    color: black !important;
+    width: 100%;
+    height: 100%;
+}
+
+.add-friend-form-input::placeholder {
+    color: black;
+    padding-left: 5px;
+}
+
+.add-friend-form-input:focus {
+    background-color: #4E6AD0;
+    outline: none;
+}
+
+
+/* friend-action-modal */
+
+.friend-action-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    background-color: rgb(52, 63, 62);
+    border-radius: 20px;
+    box-Shadow: 24;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+
+.friend-action-modal button {
+    margin-bottom: 5px;
+    border-radius: 20px;
+    background-color: #8FCB9B;
+    width: 70%;
+    padding: 5px;
+    border: none;
+    font-family: 'VT323', monospace !important;
+    font-size: 17px;
+}
+
+.friend-action-modal button:hover {
+    cursor: pointer;
+    background-color: #65B876;
+}
+
+.close-friend-list {
+    display: none;
+}
+
+.close-friend-list:hover {
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1500px) {
+    .close-friend-list {
+        display: inline;
+        position: absolute;
+        top: 1px;
+        right: 4px;
+    }
+}
+
+.chan-password-form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.chan-password-input {
+    width: 100%;
+    background-color: #36393e !important;
+    font-size: 10px;
+    color: white;
+    border-radius: 15px;
+    padding: 5px;
+    border: none;
+}
+
+.chan-password-input::placeholder {
+    color: white;
+    padding-left: 5px;
+}
+
+.chan-password-input:focus {
+	outline: none;
+}

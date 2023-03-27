@@ -1,0 +1,106 @@
+version: '3'
+services:
+  db:
+    image: postgres:15
+    restart: always
+    volumes:
+      - './docker/data/db:/var/lib/postgresql/data'
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - '5432:5432'
+    networks:
+      - db
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 5050:8080
+    networks:
+      - db
+
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+      args:
+        NGINX_SERVER_NAME_BACK: ${NGINX_SERVER_NAME_BACK}
+        NGINX_SERVER_NAME_FRONT: ${NGINX_SERVER_NAME_FRONT}
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - nginx
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    restart: always
+    volumes:
+      # Lots of lines, but we don't want node_modules to be mounted
+      - ./frontend/public:/transcendence/public
+      - ./frontend/src:/transcendence/src
+      - ./frontend/.eslintrc.js:/transcendence/.eslintrc.js
+      - ./frontend/package-lock.json:/transcendence/package-lock.json
+      - ./frontend/package.json:/transcendence/package.json
+      - ./frontend/prettier.config.js:/transcendence/prettier.config.js
+      - ./frontend/tsconfig.json:/transcendence/tsconfig.json
+    ports:
+      - '3000:3000'
+    environment:
+      REACT_APP_API_URL: ${API_URL}
+      REACT_APP_FRONTEND_URL: ${FRONTEND_URL}
+      REACT_APP_SOCKET_URL: ${SOCKET_URL}
+      REACT_APP_COOKIE_DOMAIN: ${COOKIE_DOMAIN}
+      ESLINT_NO_DEV_ERRORS: 1
+    networks:
+      - nginx
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    restart: always
+    volumes:
+      # Lots of lines, but we don't want node_modules to be mounted
+      - ./backend/src:/transcendence/src
+      - ./backend/uploads:/transcendence/uploads
+      - ./backend/.eslintrc.js:/transcendence/.eslintrc.js
+      - ./backend/nest-cli.json:/transcendence/nest-cli.json
+      - ./backend/package-lock.json:/transcendence/package-lock.json
+      - ./backend/package.json:/transcendence/package.json
+      - ./backend/prettier.config.js:/transcendence/prettier.config.js
+      - ./backend/tsconfig.json:/transcendence/tsconfig.json
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      API42_CLIENT_ID: ${API42_CLIENT_ID}
+      API42_CLIENT_SECRET: ${API42_CLIENT_SECRET}
+      API42_REDIRECT_URI: ${API42_REDIRECT_URI}
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_SECRET: ${COOKIE_SECRET}
+      TOTP_SECRET: ${TOTP_SECRET}
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN}
+      FRONTEND_URL: ${FRONTEND_URL}
+      API_URL: ${API_URL}
+      CORS_ORIGIN: ${CORS_ORIGIN}
+    networks:
+      - nginx
+      - db
+
+networks:
+  nginx:
+    driver: bridge
+  db:
+    driver: bridge

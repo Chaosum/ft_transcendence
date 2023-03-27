@@ -1,0 +1,92 @@
+@import './login.scss';
+@import './otp.scss';
+@import './menu.scss';
+@import './home.scss';
+@import './friends.scss';
+@import './infosconv.scss';
+@import './chat.scss';
+@import './friendsList.scss';
+@import './chanList.scss';
+@import './searchGame.scss';
+@import './stats.css';
+@import './settings.scss';
+@import './pong.scss';
+@import './chanuser.scss';
+@import './friendrequests.css';
+@import './privatechanjoined.css';
+@import './notFound.scss';
+@import './Ladder.css';
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+.activeLink .e-icons {
+	color: #7289da;
+}
+
+.background-modal {
+	background-color: #131313 !important;
+}
+
+.modal-item {
+	background-color: #222222;
+}
+
+.modal-e-plus:hover {
+	color: #4e6ad0;
+}
+
+.modal-e-close:hover {
+	color: #4e6ad0;
+}
+
+/* .background-modal input {
+    background-color: #8FCB9B !important;
+} */
+
+// .pixel-font {
+// 	font-family: 'VT323', monospace !important;
+// }
+
+.discord-black-one {
+	background-color: #1e2124 !important;
+}
+
+.discord-black-two {
+	background-color: #282b30 !important;
+}
+
+.discord-black-three {
+	background-color: #36393e !important;
+}
+
+.discord-black-four {
+	background-color: #424549 !important;
+}
+
+.discord-blue {
+	background-color: #7289da !important;
+}
+
+.discord-blue:hover {
+	background-color: #4e6ad0 !important;
+}
+
+.list-item {
+	margin-bottom: 3px;
+}
+
+.list-item:hover {
+	cursor: pointer;
+	background: #424549 !important;
+}
+
+.buzz {
+	color: #8fcb9b;
+}
+
+button {
+	cursor: pointer;
+}
+
+.nes-btn:focus {
+	box-shadow: none !important;
+}

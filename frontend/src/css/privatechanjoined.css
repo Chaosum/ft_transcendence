@@ -1,0 +1,22 @@
+.wrapper-private-chan-joined-item {
+    max-height: 400px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.wrapper-private-chan-joined-item::-webkit-scrollbar {
+    display: none;
+}
+
+.private-chan-joined-item {
+    width: 100%;
+}
+
+.private-chan-joined-item:hover {
+    cursor: pointer;
+    background-color: #A0D2DB;
+}
